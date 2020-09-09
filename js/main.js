@@ -6,6 +6,39 @@ let carbs = $("#carbs");
 let calories = $("#calories");
 let protein = $("#protein");
 
+let list = [
+  // {
+  //   description: 'Manzana',
+  //   calories: 10,
+  //   carbs: 10,
+  //   protein: 10,
+  // },
+  // {
+  //   description: 'Manzana',
+  //   calories: 10,
+  //   carbs: 10,
+  //   protein: 10,
+  // },
+  // {
+  //   description: 'Manzana',
+  //   calories: 10,
+  //   carbs: 10,
+  //   protein: 10,
+  // },
+  // {
+  //   description: 'Manzana',
+  //   calories: 10,
+  //   carbs: 10,
+  //   protein: 10,
+  // },
+  // {
+  //   description: 'Manzana',
+  //   calories: 10,
+  //   carbs: 10,
+  //   protein: 10,
+  // },
+];
+
 description.keypress(() => {
   description.removeClass("is-invalid");
 });
@@ -26,6 +59,26 @@ const validateInputs = () => {
   protein.val() ? "" : protein.addClass("is-invalid");
 
   if (description.val() && carbs.val() && calories.val() && protein.val()) {
-    console.log("Todos los inputs están capturados!");
+    add();
+    cleanInputs();
   }
+};
+
+const add = () => {
+  const newItem = {
+    description: description.val(),
+    carbs: Number(carbs.val()),
+    calories: Number(calories.val()),
+    protein: Number(protein.val()),
+  };
+
+  list.push(newItem);
+  console.log(list);
+};
+
+const cleanInputs = () => {
+  description.val('');
+  carbs.val('');
+  calories.val('');
+  protein.val('');
 };
