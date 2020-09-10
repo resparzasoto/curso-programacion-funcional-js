@@ -1,13 +1,6 @@
 const compose = (...functions) => (data) =>
   functions.reduceRight((value, func) => func(value), data);
 
-// {
-//   tag: 'h1',
-//   attr: {
-//     class: 'title'
-//   }
-// }
-// class="is-invalid"
 const attrsToString = (obj = {}) => {
   const keys = Object.keys(obj);
   const attrs = [];
@@ -22,10 +15,22 @@ const attrsToString = (obj = {}) => {
   return str;
 }
 
-// "tag="h1" class="title"
-const tag = t => content => `<${t}>${content}</${t}>`;
+const tagAttrs = obj => (content = '') =>
+  `<${obj.tag}${obj.attrs ? ' ' : ''}${attrsToString(obj.attrs)}>${content}</${obj.tag}>`;
 
-console.log(tag('h1')('Title')); // <h1>Title</h1>
+  console.log(tagAttrs({
+    tag: 'h1',
+    attrs: {
+      class: 'title'
+    }})('Title'));
+
+const tag = t => {
+  if (typeof t === 'string') {
+    tagAttrs({ tag: t });
+  } else {
+    tagAttrs(t);
+  }
+}
 
 let description = $("#description");
 let carbs = $("#carbs");
