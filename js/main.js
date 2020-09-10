@@ -1,6 +1,32 @@
 const compose = (...functions) => (data) =>
   functions.reduceRight((value, func) => func(value), data);
 
+// {
+//   tag: 'h1',
+//   attr: {
+//     class: 'title'
+//   }
+// }
+// class="is-invalid"
+const attrsToString = (obj = {}) => {
+  const keys = Object.keys(obj);
+  const attrs = [];
+
+  for (let i = 0; i < keys.length; i++) {
+    let attr = keys[i];
+    attrs.push(`${attr}="${obj[attr]}"`);
+  }
+
+  const str = attrs.join('');
+
+  return str;
+}
+
+// "tag="h1" class="title"
+const tag = t => content => `<${t}>${content}</${t}>`;
+
+console.log(tag('h1')('Title')); // <h1>Title</h1>
+
 let description = $("#description");
 let carbs = $("#carbs");
 let calories = $("#calories");
