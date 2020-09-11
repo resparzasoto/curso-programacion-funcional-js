@@ -26,10 +26,10 @@ const tagAttrs = obj => (content = '') =>
 
 const tag = t => {
   if (typeof t === 'string') {
-    tagAttrs({ tag: t });
-  } else {
-    tagAttrs(t);
+    return tagAttrs({ tag: t });
   }
+
+  return tagAttrs(t);
 }
 
 const tableRowTag = tag('tr');
@@ -37,7 +37,6 @@ const tableCell = tag('td');
 
 const tableCells = items => items.map(tableCell).join('');
 const tableRow = items => compose(tableRowTag, tableCells)(items);
-// const tableRow = items => tableRowTag(tableCells(items));
 
 let description = $("#description");
 let carbs = $("#carbs");
@@ -100,7 +99,7 @@ const validateInputs = () => {
     add();
     cleanInputs();
     updateTotals();
-    console.log(list);
+    renderItems();
   }
 };
 
@@ -138,3 +137,11 @@ const cleanInputs = () => {
   calories.val('');
   protein.val('');
 };
+
+const renderItems = () => {
+  $('tbody').empty();
+
+  list.map(item => {
+    $('tbody').append(tableRow([item.description, item.calories, item.carbs, item.protein]));
+  });
+}
